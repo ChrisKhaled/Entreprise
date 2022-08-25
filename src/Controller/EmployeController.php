@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Employe;
 use App\Form\EmployeFormType;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmployeController extends AbstractController
@@ -73,5 +74,17 @@ class EmployeController extends AbstractController
             return $this->redirectToRoute('default_home');
         }
         return $this->render('form/employe.html.twig', ['form_employe' => $form->createView(), 'employe' => $employe]);
+    }
+
+    #[Route('/supprimer-un-employe/{id}', name: 'delete_employe', methods: ['GET'])]
+    public function delateEmploye(Employe $employe, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        // ? pour utiliser la fnction de supression de Doctrine, un utilise la methode remove() de $entityManager
+        $entityManager->remove($employe);
+        // ? on flush() aussi pour effectuer la suppression
+        $entityManager->flush();
+
+        // ? on redirige sur la page d'accueil. la mathode redirectRoute() nous donne un objet redirectRsponse 
+        return $this->redirectToRoute('default_home');
     }
 } // en class

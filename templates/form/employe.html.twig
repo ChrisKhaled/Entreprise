@@ -2,8 +2,13 @@
 
 {% block body %}
 
-    <h1 class="text-center my-4">Ajouter un employé dans l'annuaire</h1>
+	<h1 class="text-center my-4 text-warning">Ajouter un employé dans l'annuaire</h1>
 
-    {{form(form_employe)}}
+	{# from() est la fonction twig pour afficher un formulaire. il existe plusieurs façons de demander a twig d'afficher un formulaire #}
+	<div class="row">
+		<div class="col-6 mx-auto">
+			{{form(form_employe)}}
+		</div>
+	</div>
 
-{% endblock %}
+	{% endblock %}
